@@ -22,5 +22,8 @@ wget http://downloads.zend.com/zendserver/8.5.0/ZendServer-8.5.0-RepositoryInsta
 # We need to re-install php5-fpm
 apt-get install php5-fpm
 
+# Set permissions for vagrant to access Zend Server
+chown -R vagrant:vagrant /usr/local/zend/tmp
+
 # rm /etc/nginx/sites-available/*
 mv ./sites-available /etc/nginx/sites-available
