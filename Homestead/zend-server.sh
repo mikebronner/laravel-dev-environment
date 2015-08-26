@@ -25,8 +25,6 @@ ln -s /usr/local/zend/tmp/php-fpm.sock /var/run/php5-fpm.sock;
 # Add the following line to the bottom of the http block of /etc/nginx/nginx.conf
 # `    include /etc/nginx/sites-enabled/*;`
 
-service nginx restart
-
 #===========================
 #Figure out how to run nginx/php-fpm as vagrant user.
 # Step 1: Edit /usr/local/zend/etc/php-fpm.conf and change user / group in [www] section to:
@@ -38,5 +36,7 @@ group = vagrant
 # Step 1: Replace default php5-fpm service with ZendServer's php-fpm service.
 mv /etc/init.d/php5-fpm /etc/init.d/old-php5-fpm
 ln -s /usr/local/zend/bin/php-fpm.sh php5-fpm
+
+service zend-server restart
 
 exit;
