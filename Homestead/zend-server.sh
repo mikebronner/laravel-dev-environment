@@ -29,6 +29,9 @@ service nginx restart
 
 #===========================
 #Figure out how to run nginx/php-fpm as vagrant user.
+# Step 1: Edit /usr/local/zend/etc/php-fpm.conf and change user / group in [www] section to:
+user = vagrant
+group = vagrant
 
 #===========================
 # Figure out how to alias `service php5-fpm` to ZendServer's version thereof.
