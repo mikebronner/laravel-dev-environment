@@ -10,20 +10,14 @@ cp /etc/nginx/sites-available ./sites-available
 rm /etc/apt/sources.list.d/nginx*
 
 # Uninstall NGINX, as Zend Server will install the official NGINX package in place of the Ubuntu version.
-apt-get remove nginx nginx-full nginx-common
-
-# Uninstall Zend Server if it was already installed.
-# (This is currently disabled as this might not be a good idea for people who are upgrading.)
-#aptitude purge '~nzend'
+apt-get remove -y nginx nginx-full nginx-common
+apt-get autoremove -y
+apt-get update -y
 
 # Let's run the Zend Server installation!
 wget http://downloads.zend.com/zendserver/8.5.0/ZendServer-8.5.0-RepositoryInstaller-linux.tar.gz -O - | tar -xzf - -C /tmp && /tmp/ZendServer-RepositoryInstaller-linux/install_zs.sh 5.6 nginx --automatic
 
-# We need to re-install php5-fpm
-apt-get install php5-fpm
+# Let's redirect the default php5-fpm socket to Zend Server's php-fpm socket.
+ln -s /usr/local/zend/tmp/php-fpm.sock /var/run/php5-fpm.sock;
 
-# Set permissions for vagrant to access Zend Server
-chown -R vagrant:vagrant /usr/local/zend/tmp
-
-# rm /etc/nginx/sites-available/*
-mv ./sites-available /etc/nginx/sites-available
+exit;
