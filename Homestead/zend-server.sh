@@ -1,17 +1,16 @@
-cd ~
-
-sudo su
+#!/usr/bin/env sudo -i
 
 # Let's backup our existing site configurations
-mkdir sites-available
-cp /etc/nginx/sites-available ./sites-available
+#mkdir sites-available
+#cp /etc/nginx/sites-available ./sites-available
 
-# Remove the Ubuntu-specific NGINX PPAs. These will be replaced by the official ones using the Zend Server installer.
-rm /etc/apt/sources.list.d/nginx*
+# Uninstall NGINX and php5-fpm, as Zend Server will install the official NGINX package in place of the Ubuntu version.
+apt-get purge -y nginx nginx-full nginx-common
+apt-get purge -y php5-fpm php5-curl php5-gd php5-imagick php5-imap php5-mcrypt php5-mysqlnd php5-pgsql 
 
-# Uninstall NGINX, as Zend Server will install the official NGINX package in place of the Ubuntu version.
-apt-get remove -y nginx nginx-full nginx-common
-apt-get autoremove -y
+# Remove the Homestead-specific NGINX sources. These will be replaced by the official ones using the Zend Server installer.
+add-apt-repository --yes --remove ppa:nginx/stable
+rm -f /etc/apt/sources.list.d/nginx*
 apt-get update -y
 
 # Let's run the Zend Server installation!
@@ -28,15 +27,17 @@ ln -s /usr/local/zend/tmp/php-fpm.sock /var/run/php5-fpm.sock;
 #===========================
 #Figure out how to run nginx/php-fpm as vagrant user.
 # Step 1: Edit /usr/local/zend/etc/php-fpm.conf and change user / group in [www] section to:
-user = vagrant
-group = vagrant
+#sed -ir -e 's/^(user|group) *=.*$/\1 = vagrant/' /usr/local/zend/etc/php-fpm.conf
+sed -ir -e 's/^user *=.*$/user = vagrant/' /usr/local/zend/etc/php-fpm.conf
+#user = vagrant
+#group = vagrant
 
-#===========================
-# Figure out how to alias `service php5-fpm` to ZendServer's version thereof.
-# Step 1: Replace default php5-fpm service with ZendServer's php-fpm service.
-mv /etc/init.d/php5-fpm /etc/init.d/old-php5-fpm
+# Add pointer to ZendServer's php-fpm to allow homestead to run `service php5-fpm restart`, etc.
 ln -s /usr/local/zend/bin/php-fpm.sh /etc/init.d/php5-fpm
+
+ln -s /usr/local/zend/etc/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 
 service zend-server restart
 
-exit;
+# Run `homestead provision`.
+
