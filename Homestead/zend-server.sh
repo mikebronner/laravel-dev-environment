@@ -26,25 +26,29 @@ mkdir /etc/nginx/sites-enabled
 # Add the following line to the bottom of the http block of /etc/nginx/nginx.conf
 # `    include /etc/nginx/sites-enabled/*;`
 
+# Add pointer to ZendServer's php-fpm to allow homestead to run `service php5-fpm restart`, etc.
+ln -s /usr/local/zend/bin/php-fpm.sh /etc/init.d/php5-fpm
+ln -s /usr/local/zend/etc/php-fpm.conf /etc/php5/fpm/php-fpm.conf
+
 #===========================
 #Figure out how to run nginx/php-fpm as vagrant user.
 # Step 1: Edit /usr/local/zend/etc/php-fpm.conf and change user / group in [www] section to:
 #sed -ir -e 's/^(user|group) *=.*$/\1 = vagrant/' /usr/local/zend/etc/php-fpm.conf
-sed -ir -e 's/^user *=.*$/user = vagrant/' /usr/local/zend/etc/php-fpm.conf
+#sed -ir -e 's/^user *=.*$/user = vagrant/' /usr/local/zend/etc/php-fpm.conf
 #user = vagrant
 #group = vagrant
 
-usermod -G vagrant zend
-find /usr/local/zend -user www-data -exec chown vagrant {} \;
-find /usr/local/zend -group www-data -exec chgrp vagrant {} \;
+#usermod -G vagrant zend
+#find /usr/local/zend -user www-data -exec chown vagrant {} \;
+#find /usr/local/zend -group www-data -exec chgrp vagrant {} \;
 
 # Edit /usr/local/zend/etc/conf.d/ZendGlobalDirectives.ini and set id of vagrant user and group
-zend.httpd_uid=900
-zend.httpd_gid=900
+#zend.httpd_uid=900
+#zend.httpd_gid=900
 
-# Add pointer to ZendServer's php-fpm to allow homestead to run `service php5-fpm restart`, etc.
-ln -s /usr/local/zend/bin/php-fpm.sh /etc/init.d/php5-fpm
-ln -s /usr/local/zend/etc/php-fpm.conf /etc/php5/fpm/php-fpm.conf
+# => problem with all this is that zend server wants to reset these back to 33 all the time.
+# Can we somhow give vagrant:vagrant permission to zend's files? Also, not all permissions are correct as Zend 
+# keeps making files under the nginx user, and www-data group
 
 service zend-server restart
 
