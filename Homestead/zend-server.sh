@@ -38,6 +38,10 @@ usermod -G vagrant zend
 find /usr/local/zend -user www-data -exec chown vagrant {} \;
 find /usr/local/zend -group www-data -exec chgrp vagrant {} \;
 
+# Edit /usr/local/zend/etc/conf.d/ZendGlobalDirectives.ini and set id of vagrant user and group
+zend.httpd_uid=900
+zend.httpd_gid=900
+
 # Add pointer to ZendServer's php-fpm to allow homestead to run `service php5-fpm restart`, etc.
 ln -s /usr/local/zend/bin/php-fpm.sh /etc/init.d/php5-fpm
 ln -s /usr/local/zend/etc/php-fpm.conf /etc/php5/fpm/php-fpm.conf
