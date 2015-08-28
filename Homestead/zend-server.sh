@@ -27,26 +27,19 @@ sed -ir -e 's/^.*conf\.d\/\*\.conf\;/&\n    include \/etc\/nginx\/sites\-enabled
 ln -s /usr/local/zend/bin/php-fpm.sh /etc/init.d/php5-fpm
 ln -s /usr/local/zend/etc/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 
-# The rest is experimental and needs ironing out. Everything mostly works, but ZRay is showing permission errors
-# with write access to the site files in the shared folder.
-#===========================
-#Figure out how to run nginx/php-fpm as vagrant user.
-# Step 1: Edit /usr/local/zend/etc/php-fpm.conf and change user / group in [www] section to:
-#sed -ir -e 's/^(user|group) *=.*$/\1 = vagrant/' /usr/local/zend/etc/php-fpm.conf
-#sed -ir -e 's/^user *=.*$/user = vagrant/' /usr/local/zend/etc/php-fpm.conf
-#user = vagrant
-#group = vagrant
+# have php-fpm run as vagrant user to enable access to the website files in the vagrant shared folder.
+sed -ir -e 's/^user *=.*/user = vagrant/' /usr/local/zend/etc/php-fpm.conf
+sed -ir -e 's/^user *=.*/user = vagrant/' /usr/local/zend/etc/php-fpm.confr
+sed -ir -e 's/^WEB_USER=.*/WEB_USER=vagrant/' /etc/zce.rc
+sed -ir -e 's/^zend.httpd_uid=.*/zend.httpd_uid=900/' /usr/local/zend/etc/conf.d/ZendGlobalDirectives.ini
 
-#usermod -G vagrant zend
-#find /usr/local/zend -user www-data -exec chown vagrant {} \;
-#find /usr/local/zend -group www-data -exec chgrp vagrant {} \;
+# Set ZendServer permissions to allow php-fpm to run as vagrant user.
+chown vagrant /usr/local/zend/tmp
+find /usr/local/zend/tmp -user www-data -exec chown vagrant {} \;
 
-# Edit /usr/local/zend/etc/conf.d/ZendGlobalDirectives.ini and set id of vagrant user and group
-#zend.httpd_uid=900
-#zend.httpd_gid=900
+# Relax nginx log permissions so ZendServer can read them.
+chmod o+rw /var/log/nginx/access.log
+chmod o+rw /var/log/nginx/error.log
 
-# => problem with all this is that zend server wants to reset these back to 33 all the time.
-# Can we somhow give vagrant:vagrant permission to zend's files? Also, not all permissions are correct as Zend 
-# keeps making files under the nginx user, and www-data group
-
-# Run `homestead provision` after exiting back out of Homestead.
+# Restart ZendServer to apply the changes.
+service zend-server restart
