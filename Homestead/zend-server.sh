@@ -20,7 +20,7 @@ mkdir /etc/nginx/sites-enabled
 
 # To have NGINX detect the Homestead sites in your shared folder, add the following line to the bottom of the 
 # http block of /etc/nginx/nginx.conf
-sed -ir -e 's/^.*conf\.d\/\*\.conf\;/&\n    include \/etc\/nginx\/sites\-enabled\/\*\;/' nginx.conf
+sed -ir -e 's/^.*conf\.d\/\*\.conf\;/&\n    include \/etc\/nginx\/sites\-enabled\/\*\;/' /etc/nginx/nginx.conf
 
 # Add pointer to ZendServer's php-fpm to allow homestead to run `service php5-fpm restart`. Also add the pointer for
 # the conf file, which Homestead requires.
