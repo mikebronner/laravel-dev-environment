@@ -17,3 +17,4 @@ For a detailed walkthrough of the process, please see {Medium link}. For a quick
 8. `rm install-zend-server.sh`
 9. `rm post-install-permissions.sh`
 10. `exit`
+11. Return to the ZendServer overview page in your browser. You should see a notification in the top right of the page, called "Mismatched extension directive". Click on the details button, then select the 'Apply' button (looks like an outbox).
