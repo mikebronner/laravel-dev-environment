@@ -6,6 +6,8 @@ sed -ir -e 's/^zend.httpd_uid=.*/zend.httpd_uid=900/' /usr/local/zend/etc/conf.d
 
 # Set ZendServer permissions to allow php-fpm to run as vagrant user.
 chmod -R o+rw /usr/local/zend/tmp
+chmod -R o+rw /usr/local/zend/var/log
+chmod -R o+rw /usr/local/zend/var/codetracing
 
 # Restart ZendServer to apply changes.
 service zend-server restart
