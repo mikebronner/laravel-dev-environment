@@ -34,8 +34,7 @@ sed -ir -e 's/^WEB_USER=.*/WEB_USER=vagrant/' /etc/zce.rc
 sed -ir -e 's/^zend.httpd_uid=.*/zend.httpd_uid=900/' /usr/local/zend/etc/conf.d/ZendGlobalDirectives.ini
 
 # Set ZendServer permissions to allow php-fpm to run as vagrant user.
-chown vagrant /usr/local/zend/tmp
-find /usr/local/zend/tmp -user www-data -exec chown vagrant {} \;
+chmod -R +rw /usr/local/zend/tmp
 
 # Relax nginx log permissions so ZendServer can read them.
 chmod o+rw /var/log/nginx/access.log
