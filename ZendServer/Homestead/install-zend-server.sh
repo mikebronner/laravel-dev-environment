@@ -34,6 +34,10 @@ ln -s /usr/local/zend/etc/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 chmod o+rw /var/log/nginx/access.log
 chmod o+rw /var/log/nginx/error.log
 
+# Add ZendServer maintenance log, just in case ZendServer doesn't create it.
+touch /usr/local/zend/var/log/zs_maintenance.log
+chmod og+rw /usr/local/zend/var/log/zs_maintenance.log
+
 # Apple ZendServer folder permissions before running the ZendServer installation wizard.
 wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/ZendServer/Homestead/post-install-permissions.sh && chmod +x post-install-permissions.sh && sudo ./post-install-permissions.sh
 
