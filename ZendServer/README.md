@@ -11,7 +11,7 @@ For a detailed walkthrough of the process, please see {Medium link}. For a quick
 2. `wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/ZendServer/Homestead/install-zend-server.sh && chmod +x install-zend-server.sh && sudo ./install-zend-server.sh`
 3. `exit`
 4. `homestead provision`
-5. Open `http://homestead.app:10081` in your browser and complete the installation process. Once you have reached the ZendServer overview page, continue with the steps below.
+5. Open `http://homestead.app:10081` in your browser and complete the installation process. Select 'Development' as the server environment to enable all the features. Once you have reached the ZendServer overview page, continue with the steps below.
 6. `homestead ssh`
 7. `wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/ZendServer/Homestead/post-install-permissions.sh && chmod +x post-install-permissions.sh && sudo ./post-install-permissions.sh`
 8. `rm install-zend-server.sh`
