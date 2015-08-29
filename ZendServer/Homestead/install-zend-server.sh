@@ -12,6 +12,11 @@ wget http://downloads.zend.com/zendserver/8.5.0/ZendServer-8.5.0-RepositoryInsta
 # Let's redirect the default php5-fpm socket to Zend Server's php-fpm socket.
 ln -s /usr/local/zend/tmp/php-fpm.sock /var/run/php5-fpm.sock;
 
+# Create startup script that will recreate the socket symlink on boot.
+wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/ZendServer/Homestead/zend-php-fpm-sock-linker -O /etc/init.d/zend-php-fpm-sock-linker
+chmod +x /etc/init.d/zend-php-fpm-sock-linker
+ln /etc/init.d/zend-php-fpm-sock-linker /etc/rc2.d/S10zend-php-fpm-sock-linker
+
 # Now let's recreate the sites folders so that Homestead can properly provision the sites.
 mkdir /etc/nginx/sites-available
 mkdir /etc/nginx/sites-enabled
