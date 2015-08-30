@@ -60,12 +60,8 @@ rm /etc/nginx/fastcgi_params
 mv ~/nginx/fastcgi_params /etc/nginx/fastcgi_params
 
 # Restore sites-available and sites-enabled folders:
-mkdir /etc/nginx/sites-available
-mkdir /etc/nginx/sites-enabled
-chown root:root /etc/nginx/sites-available
-chown root:root /etc/nginx/sites-enabled
-cp ~/nginx/sites-avilable/* /etc/nginx/sites-available/
-cp ~/nginx/sites-enabled/* /etc/nginx/sites-enabled/
+cp ~/nginx/sites-available/* /etc/nginx/sites-available/
+ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 
 # Restart ZendServer to apply the changes.
 service zend-server restart
