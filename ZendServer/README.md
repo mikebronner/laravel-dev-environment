@@ -10,11 +10,10 @@ For a detailed walkthrough of the process, please see {Medium link}. For a quick
 1. `homestead ssh`
 2. `wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/ZendServer/Homestead/install-zend-server.sh && chmod +x install-zend-server.sh && sudo ./install-zend-server.sh`
 3. `exit`
-4. `homestead provision`
-5. Open `http://homestead.app:10081` in your browser and complete the installation process. Select 'Development' as the server environment to enable all the features. Once you have reached the ZendServer overview page, continue with the steps below.
-6. `homestead ssh`
-7. `sudo ./post-install-permissions.sh`
-8. `rm install-zend-server.sh`
-9. `rm post-install-permissions.sh`
-10. `exit`
-11. Return to the ZendServer overview page in your browser. You should see a notification in the top right of the page, called "Mismatched extension directive". Click on the details button, then select the 'Apply' button (looks like an outbox).
+4. Open `http://homestead.app:10081` in your browser and complete the installation process. Select 'Development' as the server environment to enable all the features. Once you have reached the ZendServer overview page, continue with the steps below.
+5. `homestead ssh`
+6. `sudo ./post-install-permissions.sh`
+7. `rm install-zend-server.sh`
+8. `rm post-install-permissions.sh`
+9. `exit`
+10. Return to the ZendServer overview page in your browser. You should see a notification in the top right of the page, called "Mismatched extension directive". Click on the details button, then select the 'Apply' button (looks like an outbox).
