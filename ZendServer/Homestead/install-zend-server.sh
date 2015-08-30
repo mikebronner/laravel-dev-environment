@@ -48,6 +48,9 @@ wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/
 #sed -e "/^(\s*#ZEND.*(.*[\n])*.*ZEND.*})/w /etc/nginx/nginx.conf
 #/http\s{/,\$w ./nginx/nginx.conf" /etc/nginx/nginx.conf
 
+#Get the ZendServer directives from nginx.conf:
+grep -Pzo "(.*#ZEND.*(.*[\s])*.*ZEND.*})" /etc/nginx/nginx.conf
+
 
 # Restart ZendServer to apply the changes.
 service zend-server restart
