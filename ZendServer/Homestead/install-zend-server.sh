@@ -44,13 +44,6 @@ chmod og+rw /usr/local/zend/var/log/zs_maintenance.log
 # Apple ZendServer folder permissions before running the ZendServer installation wizard.
 wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/ZendServer/Homestead/post-install-permissions.sh && chmod +x post-install-permissions.sh && sudo ./post-install-permissions.sh
 
-# Update nginx configuration based on original values.
-#sed -e "/^(\s*#ZEND.*(.*[\n])*.*ZEND.*})/w /etc/nginx/nginx.conf
-#/http\s{/,\$w ./nginx/nginx.conf" /etc/nginx/nginx.conf
-
-#Get the ZendServer directives from nginx.conf:
-#grep -Pzo "(.*#ZEND.*(.*[\s])*.*ZEND.*})" /etc/nginx/nginx.conf
-
 # Use original nginx.conf with ZendServer's includes:
 sed -e "s,include \/etc\/nginx\/sites\-enabled\/\*\;,include \/etc\/nginx\/sites\-enabled\/\*\;\n`grep -Pzo '(.*#ZEND.*(.*[\s])*.*ZEND.*})' /etc/nginx/nginx.conf | tr '\n' '@'`," ~/nginx/nginx.conf | tr '@' '\n' > /etc/nginx/new-nginx.conf
 rm /etc/nginx/nginx.conf
@@ -61,6 +54,10 @@ cp ~/nginx/fastcgi.conf /etc/nginx/new-fastcgi.conf
 cat /etc/nginx/fastcgi.conf >> /etc/nginx/new-fastcgi.conf
 rm /etc/nginx/fastcgi.conf
 mv /etc/nginx/new-fastcgi.conf /etc/nginx/fastcgi.conf
+
+# Use the original fastcgi_params:
+rm /etc/nginx/fastcgi_params
+mv ~/nginx/fastcgi_params /etc/nginx/fastcgi_params
 
 # Restart ZendServer to apply the changes.
 service zend-server restart
