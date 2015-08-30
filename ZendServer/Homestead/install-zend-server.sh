@@ -59,7 +59,13 @@ mv /etc/nginx/new-fastcgi.conf /etc/nginx/fastcgi.conf
 rm /etc/nginx/fastcgi_params
 mv ~/nginx/fastcgi_params /etc/nginx/fastcgi_params
 
-# Restore sites-available and sites-enabled folders:
+# Restore ssl, snippets, sites-available, and sites-enabled folders:
+mkdir /etc/nginx/ssl
+mkdir /etc/nginx/snippets
+chown root:root /etc/nginx/ssl
+chown root:root /etc/nginx/snippets
+cp ~/nginx/ssl/* /etc/nginx/ssl/
+cp ~/nginx/ssl/* /etc/nginx/snippets/
 cp ~/nginx/sites-available/* /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 
