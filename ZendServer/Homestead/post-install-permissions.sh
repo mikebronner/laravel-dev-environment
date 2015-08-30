@@ -1,5 +1,6 @@
 # have php-fpm run as vagrant user to enable access to the website files in the vagrant shared folder.
-sed -i -e 's/^user *=.*/user = vagrant/' /usr/local/zend/etc/php-fpm.conf
+sed -i -e 's/^user[\s]*=.*/user = vagrant/' /usr/local/zend/etc/php-fpm.conf
+sed -i -e 's/^listen.owner[\s]*=.*/listen.owner = vagrant/' /usr/local/zend/etc/php-fpm.conf
 sed -i -e 's/^WEB_USER=.*/WEB_USER=vagrant/' /etc/zce.rc
 sed -i -e 's/^zend.httpd_uid=.*/zend.httpd_uid=900/' /usr/local/zend/etc/conf.d/ZendGlobalDirectives.ini
 
