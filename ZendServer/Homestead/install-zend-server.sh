@@ -1,3 +1,6 @@
+# Copy nginx configuration before deleting it.
+cp -r /etc/nginx
+
 # Uninstall NGINX and php5-fpm, as Zend Server will install the official NGINX package in place of the Ubuntu version.
 apt-get purge -y nginx nginx-full nginx-common php5-fpm php5-curl php5-gd php5-imagick php5-imap php5-mcrypt php5-mysqlnd php5-pgsql
 
