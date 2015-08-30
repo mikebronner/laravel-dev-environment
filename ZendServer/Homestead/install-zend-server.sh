@@ -44,5 +44,10 @@ chmod og+rw /usr/local/zend/var/log/zs_maintenance.log
 # Apple ZendServer folder permissions before running the ZendServer installation wizard.
 wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/ZendServer/Homestead/post-install-permissions.sh && chmod +x post-install-permissions.sh && sudo ./post-install-permissions.sh
 
+# Update nginx configuration based on original values.
+sed -e "/^(\s*#ZEND.*(.*[\n])*.*ZEND.*})/w /etc/nginx/nginx.conf
+/http\s{/,\$w ./nginx/nginx.conf" /etc/nginx/nginx.conf
+
+
 # Restart ZendServer to apply the changes.
 service zend-server restart
