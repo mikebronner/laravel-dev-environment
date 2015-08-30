@@ -51,9 +51,16 @@ wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/
 #Get the ZendServer directives from nginx.conf:
 #grep -Pzo "(.*#ZEND.*(.*[\s])*.*ZEND.*})" /etc/nginx/nginx.conf
 
+# Use original nginx.conf with ZendServer's includes:
 sed -e "s,include \/etc\/nginx\/sites\-enabled\/\*\;,include \/etc\/nginx\/sites\-enabled\/\*\;\n`grep -Pzo '(.*#ZEND.*(.*[\s])*.*ZEND.*})' /etc/nginx/nginx.conf | tr '\n' '@'`," ~/nginx/nginx.conf | tr '@' '\n' > /etc/nginx/new-nginx.conf
-rm nginx.conf
-mv new-nginx.conf nginx.conf
+rm /etc/nginx/nginx.conf
+mv /etc/nginx/new-nginx.conf /etc/nginx/nginx.conf
+
+# Add ZendServer's fastcgi directives to the original ones:
+cp ~/nginx/fastcgi.conf /etc/nginx/new-fastcgi.conf
+cat /etc/nginx/fastcgi.conf >> /etc/nginx/new-fastcgi.conf
+rm /etc/nginx/fastcgi.conf
+mv /etc/nginx/new-fastcgi.conf /etc/nginx/fastcgi.conf
 
 # Restart ZendServer to apply the changes.
 service zend-server restart
