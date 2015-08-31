@@ -2,7 +2,7 @@
 wget http://downloads.zend.com/zray/1208/zray-php5.6-Ubuntu-14.04-x86_64.tar.gz && tar xvfz zray-php5.6-Ubuntu-14.04-x86_64.tar.gz -C /opt
 
 # Add zray.conf
-wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/Zend-Z-Ray/Homestead/zray.conf /etc/nginx/conf.d/zray.conf
+wget https://raw.githubusercontent.com/GeneaLabs/laravel-dev-environment/master/Zend-Z-Ray/Homestead/zray.conf -O /etc/nginx/conf.d/zray.conf
 
 # Create symlinks to load Z-Ray configurations in php-fpm and php-cli:
 ln -sf /opt/zray/zray.ini /etc/php5/cli/conf.d/zray.ini 
